@@ -9,8 +9,8 @@ enum class Axis
 struct AxisInfo
 {
 	Axis axis;
-	std::list<sf::Keyboard::Key> positives;
-	std::list<sf::Keyboard::Key> negatives;
+	std::list<int> positives;
+	std::list<int> negatives;
 
 	float sensi = 10.f;
 	float value = 0.f;
@@ -19,11 +19,12 @@ struct AxisInfo
 class InputMgr
 {
 private:
-	static std::list<sf::Keyboard::Key> downKeys;
+	static std::list<int> downKeys;
+	static std::list<int> heldKeys;
+	static std::list<int> upKeys;
+	/*static std::list<sf::Keyboard::Key> downKeys;
 	static std::list<sf::Keyboard::Key> heldKeys;
-	static std::list<sf::Keyboard::Key> upKeys;
-
-	static std::vector<int> mouseStates;
+	static std::list<sf::Keyboard::Key> upKeys;*/
 
 	static std::unordered_map<Axis, AxisInfo> axisInfoMap;
 
@@ -38,10 +39,12 @@ public:
 	static bool GetKeyUp(sf::Keyboard::Key key);
 	static bool GetKey(sf::Keyboard::Key key);
 
-	static bool Contains(const std::list<sf::Keyboard::Key>& list, sf::Keyboard::Key key);
-	static bool Contains(const std::vector<int>& list, sf::Mouse::Button key);
-	static void Remove(std::list<sf::Keyboard::Key>& list, sf::Keyboard::Key key);
-	static void Remove(std::vector<int>& list, sf::Mouse::Button key);
+	static bool Contains(const std::list<int>& list, sf::Keyboard::Key key);
+	static bool Contains(const std::list<int>& list, sf::Mouse::Button key);
+	/*static bool Contains(const std::list<sf::Keyboard::Key>& list, sf::Keyboard::Key key);*/
+	static void Remove(std::list<int>& list, sf::Keyboard::Key key);
+	static void Remove(std::list<int>& list, sf::Mouse::Button key);
+	/*static void Remove(std::list<sf::Keyboard::Key>& list, sf::Keyboard::Key key);*/
 
 	static float GetAxisRaw(Axis axis);
 	static float GetAxis(Axis axis);
