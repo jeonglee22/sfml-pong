@@ -33,12 +33,39 @@ void SceneDev1::Update(float dt)
 		SCENE_MGR.ChangeScene(SceneIds::Dev2);
 	}
 
+	if (InputMgr::GetMouseButtonDown(sf::Mouse::Left))
+	{
+		std::cout << "Down" << std::endl;
+	}
+	else if (InputMgr::GetMouseButton(sf::Mouse::Left))
+	{
+		//std::cout << "Pressed" << std::endl;
+	}
+	else if (InputMgr::GetMouseButtonUp(sf::Mouse::Left))
+	{
+		std::cout << "Up" << std::endl;
+	}
+
 	if (InputMgr::GetKeyDown(sf::Keyboard::Num1))
 	{
-		textGo->sortingOrder = -10;
+		textGo->sortingOrder = -1;
 	}
 	if (InputMgr::GetKeyDown(sf::Keyboard::Num2))
 	{
-		textGo->sortingOrder = 10;
+		textGo->sortingOrder = 1;
+	}
+
+	sf::Vector2f dir;
+	dir.x = InputMgr::GetAxisRaw(Axis::Horizontal);
+	dir.y = InputMgr::GetAxisRaw(Axis::Vertical);
+
+	sf::Vector2f pos = textGo->GetPosition();
+	pos += dir * 500.f * dt;
+	textGo->SetPosition(pos);
+
+	if (InputMgr::GetMouseButtonDown(sf::Mouse::Left))
+	{
+		sf::Vector2i mousePos = InputMgr::GetMousePosition();
+		std::cout << mousePos.x << ", " << mousePos.y << std::endl;
 	}
 }

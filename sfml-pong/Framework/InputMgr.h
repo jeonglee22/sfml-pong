@@ -23,6 +23,8 @@ private:
 	static std::list<sf::Keyboard::Key> heldKeys;
 	static std::list<sf::Keyboard::Key> upKeys;
 
+	static std::vector<int> mouseStates;
+
 	static std::unordered_map<Axis, AxisInfo> axisInfoMap;
 
 public:
@@ -37,9 +39,17 @@ public:
 	static bool GetKey(sf::Keyboard::Key key);
 
 	static bool Contains(const std::list<sf::Keyboard::Key>& list, sf::Keyboard::Key key);
+	static bool Contains(const std::vector<int>& list, sf::Mouse::Button key);
 	static void Remove(std::list<sf::Keyboard::Key>& list, sf::Keyboard::Key key);
+	static void Remove(std::vector<int>& list, sf::Mouse::Button key);
 
 	static float GetAxisRaw(Axis axis);
 	static float GetAxis(Axis axis);
+
+	static bool GetMouseButtonDown(sf::Mouse::Button button);
+	static bool GetMouseButtonUp(sf::Mouse::Button button);
+	static bool GetMouseButton(sf::Mouse::Button button);
+
+	static sf::Vector2i GetMousePosition();
 };
 
