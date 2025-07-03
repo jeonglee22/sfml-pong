@@ -17,6 +17,12 @@ void SceneDev1::Init()
 	go->SetFillColor(sf::Color::White);
 	AddGameObject(go);
 
+	textGo = new TextGo("fonts/DS-DIGIT.ttf");
+	textGo->SetString("Dev 1");
+	textGo->SetCharacterSize(30);
+	textGo->SetFillColor(sf::Color::Red);
+	AddGameObject(textGo);
+
 	Scene::Init();
 }
 
@@ -25,5 +31,14 @@ void SceneDev1::Update(float dt)
 	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 	{
 		SCENE_MGR.ChangeScene(SceneIds::Dev2);
+	}
+
+	if (InputMgr::GetKeyDown(sf::Keyboard::Num1))
+	{
+		textGo->sortingOrder = -10;
+	}
+	if (InputMgr::GetKeyDown(sf::Keyboard::Num2))
+	{
+		textGo->sortingOrder = 10;
 	}
 }
