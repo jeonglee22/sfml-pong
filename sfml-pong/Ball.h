@@ -1,9 +1,22 @@
 #pragma once
 #include "GameObject.h"
+
+class Bat;
+
 class Ball : public GameObject
 {
 protected:
     sf::CircleShape shape;
+
+    sf::Vector2f direction;
+    float speed = 200.f;
+
+    Bat* bat = nullptr;
+
+    float minX = 0.f;
+    float minY = 0.f;
+    float maxX = 0.f;
+    float maxY = 0.f;
 
 public:
     Ball(const std::string& name = "");
@@ -21,5 +34,8 @@ public:
     void Reset() override;
     void Update(float dt) override;
     void Draw(sf::RenderWindow& window) override;
+
+    void Fire(const sf::Vector2f& dir, float sp);
+    void SetBat(Bat* bat) { this->bat = bat; }
 };
 

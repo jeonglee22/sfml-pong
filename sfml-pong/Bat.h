@@ -4,6 +4,13 @@ class Bat : public GameObject
 {
 protected:
     sf::RectangleShape shape;
+    sf::Vector2f shapeSize;
+
+    float speed = 500.f;
+    sf::Vector2f direction;
+
+    float minX = 0.f;
+    float maxX = 0.f;
 
 public:
     Bat(const std::string& name = "");
@@ -21,5 +28,7 @@ public:
     void Reset() override;
     void Update(float dt) override;
     void Draw(sf::RenderWindow& window) override;
+
+    sf::FloatRect GetGlobalBound() const { return shape.getGlobalBounds(); }
 };
 
