@@ -14,6 +14,8 @@ protected:
     float speed = 200.f;
 
     Bat* bat = nullptr;
+    Bat* bat1 = nullptr;
+    Bat* bat2 = nullptr;
     PongUI* pongUI = nullptr;
     PingPongUI* pingUI = nullptr;
 
@@ -45,8 +47,10 @@ public:
 
     void Fire(const sf::Vector2f& dir, float sp);
     void SetBat(Bat* bat) { this->bat = bat; }
+    void SetBat1(Bat* bat) { this->bat1 = bat; }
+    void SetBat2(Bat* bat) { this->bat2 = bat; }
     void SetScore(PongUI* pUI) { pongUI = pUI; }
-    void SetPingPong(PingPongUI* pUI) { pingUI = pUI; }
+    void SetPing(PingPongUI* pUI) { pingUI = pUI; }
 
     void Start(float sp);
 };

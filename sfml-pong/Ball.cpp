@@ -3,6 +3,7 @@
 #include "Bat.h"
 #include "PingPongUI.h"
 #include "SceneGame.h"
+#include "ScenePingPong.h"
 
 Ball::Ball(const std::string& name)
 	:GameObject(name)
@@ -67,32 +68,49 @@ void Ball::Reset()
 	speed = 0.f;
 
 	float radius = shape.getRadius();
-	minX = bound.left + radius;
-	maxX = bound.left + bound.width - radius;
+	minX = !isPingPong ? bound.left + radius : bound.left - 50.f;
+	maxX = !isPingPong ? bound.left + bound.width - radius : bound.left + bound.width + 50.f;
 	minY = bound.top + radius * 2.f;
-	if (!isPingPong)
-	{
-		maxY = bound.top + bound.height + 100.f;
-	}
-	else
-	{
-		maxY = bound.top + bound.height;
-	}
+	maxY = !isPingPong ? bound.top + bound.height + 100.f : maxY = bound.top + bound.height;
 }
 
 void Ball::Update(float dt)
 {
 	sf::Vector2f pos = GetPosition() + direction * speed * dt;
 	
-	if (pos.x < minX)
+	if(!isPingPong)
 	{
-		pos.x = minX;
-		direction.x *= -1.f;
+		if (pos.x < minX)
+		{
+			pos.x = minX;
+			direction.x *= -1.f;
+		}
+		else if (pos.x > maxX)
+		{
+			pos.x = maxX;
+			direction.x *= -1.f;
+		}
 	}
-	else if (pos.x > maxX)
+	else
 	{
-		pos.x = maxX;
-		direction.x *= -1.f;
+		if (pos.x < minX)
+		{
+			pingUI->SetGameText("Press Enter to Restart");
+			pingUI->SetTextActive(true);
+			pingUI->SetWinText("Player  2  Win");
+			pingUI->SetWinTextActive(true);
+			/*ScenePingPong* scene = (ScenePingPong*)SCENE_MGR.GetCurrentScene();
+			scene->SetGameOver();*/
+		}
+		else if (pos.x > maxX)
+		{
+			pingUI->SetGameText("Press Enter to Restart");
+			pingUI->SetTextActive(true);
+			pingUI->SetWinText("Player  1  Win");
+			pingUI->SetWinTextActive(true);
+			/*ScenePingPong* scene = (ScenePingPong*)SCENE_MGR.GetCurrentScene();
+			scene->SetGameOver();*/
+		}
 	}
 
 	if (pos.y < minY)
@@ -102,17 +120,34 @@ void Ball::Update(float dt)
 	}
 	else if (pos.y > maxY)
 	{
-		SceneGame* scene = (SceneGame*)SCENE_MGR.GetCurrentScene();
-		scene->SetGameOver();
+		if (!isPingPong)
+		{
+			SceneGame* scene = (SceneGame*)SCENE_MGR.GetCurrentScene();
+			scene->SetGameOver();
+		}
+		else
+		{
+			pos.y = maxY;
+			direction.y *= -1.f;
+		}
 	}
 
-	if (bat != nullptr)
+	if (bat1 != nullptr)
 	{
-		const sf::FloatRect& batBound = bat->GetGlobalBound();
+		const sf::FloatRect& batBound = bat1->GetGlobalBound();
 		if (shape.getGlobalBounds().intersects(batBound))
 		{
-			pos.y = batBound.top;
-			direction.y *= -1.f;
+			pos.x = batBound.left + batBound.width + shape.getRadius();
+			direction.x *= -1.f;
+		}
+	}
+	if (bat2 != nullptr)
+	{
+		const sf::FloatRect& batBound = bat2->GetGlobalBound();
+		if (shape.getGlobalBounds().intersects(batBound))
+		{
+			pos.x = batBound.left - shape.getRadius();
+			direction.x *= -1.f;
 		}
 	}
 
@@ -133,8 +168,11 @@ void Ball::Fire(const sf::Vector2f& dir, float sp)
 void Ball::Start(float sp)
 {
 	sf::Vector2f dir;
-	dir.x = Utils::RandomRange(-1.f, 1.f);
-	dir.y = Utils::RandomRange(-1.f, 1.f);
+	int right = Utils::RandomRange(0,2);
+	dir.x = Utils::RandomRange(0.5f, 1.f);
+	dir.y = Utils::RandomRange(-0.5f, 0.5f);
+	if (!right)
+		dir.x *= -1.f;
 	Utils::Normalize(dir);
 	direction = dir;
 	speed = sp;

@@ -31,9 +31,11 @@ void ScenePingPong::Init()
 
 	ball = (Ball*)AddGameObject(new Ball("Ball"));
 	ball->SetPingPong(true);
+	ball->SetBat1(bat1);
+	ball->SetBat2(bat2);
 
 	pingUI = (PingPongUI*)AddGameObject(new PingPongUI("PingPongUI"));
-	ball->SetPingPong(pingUI);
+	ball->SetPing(pingUI);
 
 	Scene::Init();
 }
@@ -55,6 +57,19 @@ void ScenePingPong::Update(float dt)
 		{
 			ballActive = true;
 			ball->Start(500.f);
+			pingUI->SetTextActive(false);
 		}
 	}
+
+	if (pingUI->GetWinTextActive() && InputMgr::GetKeyDown(sf::Keyboard::Enter))
+	{
+		pingUI->SetTextActive(false);
+		pingUI->SetWinTextActive(false);
+		SetGameOver();
+	}
+}
+
+void ScenePingPong::SetGameOver()
+{
+	SCENE_MGR.ChangeScene(SceneIds::PingPong);
 }
