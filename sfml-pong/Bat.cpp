@@ -72,28 +72,10 @@ void Bat::Update(float dt)
 {
 	sf::FloatRect bound = FRAMEWORK.GetWindowBounds();
 
-	if(!isPingPong)
-	{
-		direction.x = InputMgr::GetAxisRaw(Axis::Horizontal);
-		sf::Vector2f pos = GetPosition() + direction * speed * dt;
-		SetPosition({ Utils::Clamp(pos.x, minX, maxX), pos.y });
-	}
-	else
-	{
-		direction.y = InputMgr::GetAxisRaw(Axis::Vertical);
-		if ((name == "Bat1" && (InputMgr::GetKey(sf::Keyboard::W)) ||
-			(name == "Bat2" && (InputMgr::GetKey(sf::Keyboard::Up)))) && direction.y == -1.f)
-		{
-			sf::Vector2f pos = GetPosition() + direction * speed * dt;
-			SetPosition({ pos.x, Utils::Clamp(pos.y, minY, maxY) });
-		}
-		else if ((name == "Bat1" && (InputMgr::GetKey(sf::Keyboard::S)) ||
-			(name == "Bat2" && (InputMgr::GetKey(sf::Keyboard::Down)))) && direction.y == 1.f)
-		{
-			sf::Vector2f pos = GetPosition() + direction * speed * dt;
-			SetPosition({ pos.x, Utils::Clamp(pos.y, minY, maxY) });
-		}
-	}
+	direction.x = InputMgr::GetAxis(Axis::Horizontal);
+	sf::Vector2f pos = GetPosition() + direction * speed * dt;
+	//SetPosition({ pos.x, Utils::Clamp(pos.y, minY, maxY) });
+	SetPosition({ Utils::Clamp(pos.x, minX, maxX), pos.y});
 }
 
 void Bat::Draw(sf::RenderWindow& window)

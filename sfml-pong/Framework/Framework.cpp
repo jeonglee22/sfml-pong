@@ -12,6 +12,7 @@ void Framework::Init(int w, int h, const std::string& t)
 	SOUNDBUFFER_MGR.Load(soundIds);
 
     Utils::Init();
+    rand(); // Init random
 	InputMgr::Init();
 	SCENE_MGR.Init();
 }

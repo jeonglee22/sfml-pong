@@ -14,6 +14,8 @@ void SceneGame::Init()
 
 	bat = (Bat*) AddGameObject(new Bat("Bat"));
 	bat->SetInitPosition({bound.width / 2.f, bound.height - 20.f});
+	bat->SetOrigin(Origins::TC);
+
 	ball = (Ball*) AddGameObject(new Ball("Ball"));
 	ball->SetBat(bat);
 

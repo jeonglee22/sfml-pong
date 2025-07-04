@@ -1,9 +1,8 @@
 #include "stdafx.h"
 #include "Ball.h"
 #include "Bat.h"
-#include "PongUI.h"
+#include "PingPongUI.h"
 #include "SceneGame.h"
-#include "SceneGame2.h"
 
 Ball::Ball(const std::string& name)
 	:GameObject(name)
@@ -103,16 +102,8 @@ void Ball::Update(float dt)
 	}
 	else if (pos.y > maxY)
 	{
-		if (SCENE_MGR.GetCurrentSceneId() == SceneIds::Game)
-		{
-			SceneGame* scene = (SceneGame*)SCENE_MGR.GetCurrentScene();
-			scene->SetGameOver();
-		}
-		else if (SCENE_MGR.GetCurrentSceneId() == SceneIds::Game2)
-		{
-			pongUI->SetTextActive(true);
-			pongUI->SetGameText("Press Enter to Restart!");
-		}
+		SceneGame* scene = (SceneGame*)SCENE_MGR.GetCurrentScene();
+		scene->SetGameOver();
 	}
 
 	if (bat != nullptr)
@@ -122,7 +113,6 @@ void Ball::Update(float dt)
 		{
 			pos.y = batBound.top;
 			direction.y *= -1.f;
-			pongUI->SetScore(pongUI->GetScore() + 10);
 		}
 	}
 
@@ -136,6 +126,16 @@ void Ball::Draw(sf::RenderWindow& window)
 
 void Ball::Fire(const sf::Vector2f& dir, float sp)
 {
+	direction = dir;
+	speed = sp;
+}
+
+void Ball::Start(float sp)
+{
+	sf::Vector2f dir;
+	dir.x = Utils::RandomRange(-1.f, 1.f);
+	dir.y = Utils::RandomRange(-1.f, 1.f);
+	Utils::Normalize(dir);
 	direction = dir;
 	speed = sp;
 }

@@ -63,13 +63,10 @@
     <ClCompile Include="test.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="PongUI.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneGame2.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="ScenePingPong.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="PingPongUI.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -128,13 +125,10 @@
     <ClInclude Include="test.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="PongUI.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneGame2.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="ScenePingPong.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="PingPongUI.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

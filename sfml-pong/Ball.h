@@ -3,6 +3,7 @@
 
 class Bat;
 class PongUI;
+class PingPongUI;
 
 class Ball : public GameObject
 {
@@ -14,6 +15,7 @@ protected:
 
     Bat* bat = nullptr;
     PongUI* pongUI = nullptr;
+    PingPongUI* pingUI = nullptr;
 
     float minX = 0.f;
     float minY = 0.f;
@@ -44,5 +46,8 @@ public:
     void Fire(const sf::Vector2f& dir, float sp);
     void SetBat(Bat* bat) { this->bat = bat; }
     void SetScore(PongUI* pUI) { pongUI = pUI; }
+    void SetPingPong(PingPongUI* pUI) { pingUI = pUI; }
+
+    void Start(float sp);
 };
 

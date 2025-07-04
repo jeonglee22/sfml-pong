@@ -19,7 +19,6 @@ enum class SceneIds
 {
 	None = -1,
 	Game,
-	Game2,
 	PingPong,
 	Dev1,
 	Dev2,

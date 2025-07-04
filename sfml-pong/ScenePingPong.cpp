@@ -2,6 +2,7 @@
 #include "ScenePingPong.h"
 #include "Bat.h"
 #include "Ball.h"
+#include "PingPongUI.h"
 
 ScenePingPong::ScenePingPong()
 	:Scene(SceneIds::PingPong)
@@ -10,6 +11,8 @@ ScenePingPong::ScenePingPong()
 
 void ScenePingPong::Init()
 {
+	fontIds.push_back("fonts/DS-DIGIT.TTF");
+
 	sf::FloatRect bound = FRAMEWORK.GetWindowBounds();
 
 	bat1 = (Bat*)AddGameObject(new Bat("Bat1"));
@@ -29,15 +32,29 @@ void ScenePingPong::Init()
 	ball = (Ball*)AddGameObject(new Ball("Ball"));
 	ball->SetPingPong(true);
 
+	pingUI = (PingPongUI*)AddGameObject(new PingPongUI("PingPongUI"));
+	ball->SetPingPong(pingUI);
+
 	Scene::Init();
 }
 
 void ScenePingPong::Enter()
 {
+	ballActive = false;
+
 	Scene::Enter();
 }
 
 void ScenePingPong::Update(float dt)
 {
 	Scene::Update(dt);
+
+	if (!ballActive)
+	{
+		if (InputMgr::GetKeyDown(sf::Keyboard::Enter))
+		{
+			ballActive = true;
+			ball->Start(500.f);
+		}
+	}
 }
