@@ -3,6 +3,7 @@
 #include "Bat.h"
 #include "PongUI.h"
 #include "SceneGame.h"
+#include "SceneGame2.h"
 
 Ball::Ball(const std::string& name)
 	:GameObject(name)
@@ -92,6 +93,11 @@ void Ball::Update(float dt)
 		{
 			SceneGame* scene = (SceneGame*)SCENE_MGR.GetCurrentScene();
 			scene->SetGameOver();
+		}
+		else if (SCENE_MGR.GetCurrentSceneId() == SceneIds::Game2)
+		{
+			pongUI->SetTextActive(true);
+			pongUI->SetGameText("Press Enter to Restart!");
 		}
 	}
 

@@ -6,8 +6,8 @@ class Ball;
 class SceneGame : public Scene
 {
 protected:
-    Bat* bat;
-    Ball* ball;
+    Bat* bat = nullptr;
+    Ball* ball = nullptr;
 
     bool ballActive = false;
 

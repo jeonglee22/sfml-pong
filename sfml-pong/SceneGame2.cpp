@@ -44,11 +44,19 @@ void SceneGame2::Update(float dt)
 			sf::Vector2f dir = { 1.f, -1.f };
 			Utils::Normalize(dir);
 			ball->Fire(dir, 500.f);
+
+			pongUI->SetTextActive(false);
 		}
+	}
+
+	if (InputMgr::GetKeyDown(sf::Keyboard::Enter) && pongUI->GetTextActive())
+	{
+		pongUI->SetTextActive(false);
+		SetGameOver();
 	}
 }
 
 void SceneGame2::SetGameOver()
 {
-	SCENE_MGR.ChangeScene(SceneIds::Game);
+	SCENE_MGR.ChangeScene(SceneIds::Game2);
 }
