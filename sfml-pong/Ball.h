@@ -2,6 +2,7 @@
 #include "GameObject.h"
 
 class Bat;
+class PongUI;
 
 class Ball : public GameObject
 {
@@ -12,6 +13,7 @@ protected:
     float speed = 200.f;
 
     Bat* bat = nullptr;
+    PongUI* pongUI = nullptr;
 
     float minX = 0.f;
     float minY = 0.f;
@@ -37,5 +39,6 @@ public:
 
     void Fire(const sf::Vector2f& dir, float sp);
     void SetBat(Bat* bat) { this->bat = bat; }
+    void SetScore(PongUI* pUI) { pongUI = pUI; }
 };
 

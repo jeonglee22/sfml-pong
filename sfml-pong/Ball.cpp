@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Ball.h"
 #include "Bat.h"
+#include "PongUI.h"
 #include "SceneGame.h"
 
 Ball::Ball(const std::string& name)
@@ -101,6 +102,7 @@ void Ball::Update(float dt)
 		{
 			pos.y = batBound.top;
 			direction.y *= -1.f;
+			pongUI->SetScore(pongUI->GetScore() + 10);
 		}
 	}
 
