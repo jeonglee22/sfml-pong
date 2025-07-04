@@ -56,8 +56,8 @@ void SceneDev1::Update(float dt)
 	}
 
 	sf::Vector2f dir;
-	dir.x = InputMgr::GetAxisRaw(Axis::Horizontal);
-	dir.y = InputMgr::GetAxisRaw(Axis::Vertical);
+	dir.x = InputMgr::GetAxis(Axis::Horizontal);
+	dir.y = InputMgr::GetAxis(Axis::Vertical);
 
 	sf::Vector2f pos = textGo->GetPosition();
 	pos += dir * 500.f * dt;
