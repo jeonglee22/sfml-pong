@@ -18,6 +18,7 @@ protected:
     float maxY = 0.f;
 
     bool isPingPong = false;
+    bool isMove = false;
 
 public:
     Bat(const std::string& name = "");
