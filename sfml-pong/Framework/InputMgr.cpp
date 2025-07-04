@@ -5,9 +5,8 @@ std::list<int> InputMgr::downKeys;
 std::list<int> InputMgr::heldKeys;
 std::list<int> InputMgr::upKeys;
 
-//std::vector<int> InputMgr::mouseStates(sf::Mouse::ButtonCount);
-
 std::unordered_map<Axis, AxisInfo> InputMgr::axisInfoMap;
+sf::Vector2i InputMgr::mousePosition;
 
 void InputMgr::Init()
 {
@@ -32,17 +31,6 @@ void InputMgr::Clear()
 {
 	downKeys.clear();
 	upKeys.clear();
-	/*for (int i = 0 ; i < sf::Mouse::ButtonCount; i++)
-	{
-		if (mouseStates[i] == 3)
-		{
-			mouseStates[i] = 0;
-		}
-		else if (mouseStates[i] == 1)
-		{
-			mouseStates[i] = 2;
-		}
-	}*/
 }
 
 void InputMgr::UpdateEvent(const sf::Event& ev) 
@@ -50,33 +38,41 @@ void InputMgr::UpdateEvent(const sf::Event& ev)
 	switch (ev.type)
 	{
 	case sf::Event::KeyPressed:
+	{
 		if (!Contains(heldKeys, ev.key.code))
 		{
 			downKeys.push_back(ev.key.code);
 			heldKeys.push_back(ev.key.code);
 		}
 		break;
+	}
 	case sf::Event::KeyReleased:
+	{
 		Remove(heldKeys, ev.key.code);
 		upKeys.push_back(ev.key.code);
 		break;
+	}
 	case sf::Event::MouseButtonPressed:
+	{
 		if (!Contains(heldKeys, ev.mouseButton.button))
 		{
 			downKeys.push_back(sf::Keyboard::KeyCount + ev.mouseButton.button);
 			heldKeys.push_back(sf::Keyboard::KeyCount + ev.mouseButton.button);
 		}
 		break;
+	}
 	case sf::Event::MouseButtonReleased:
+	{
 		Remove(heldKeys, ev.mouseButton.button);
 		upKeys.push_back(sf::Keyboard::KeyCount + ev.mouseButton.button);
 		break;
+	}
 	}
 }
 
 void InputMgr::Update(float dt) 
 {
-
+	mousePosition = sf::Mouse::getPosition(FRAMEWORK.GetWindow());
 }
 
 bool InputMgr::GetKeyDown(sf::Keyboard::Key key)
@@ -125,16 +121,30 @@ float InputMgr::GetAxisRaw(Axis axis)
 	auto it = heldKeys.rbegin();
 	while (it != heldKeys.rend())
 	{
-		sf::Keyboard::Key code = (sf::Keyboard::Key)*it;
-		if (Contains(axisInfo.positives, code))
+		int code = *it;
+		
+		if (code >= sf::Keyboard::KeyCount)
 		{
-			return 1.f;
+			if (Contains(axisInfo.positives, (sf::Mouse::Button)(code - sf::Keyboard::KeyCount)))
+			{
+				return 1.f;
+			}
+			else if (Contains(axisInfo.negatives, (sf::Mouse::Button)(code - sf::Keyboard::KeyCount)))
+			{
+				return -1.f;
+			}
 		}
-		else if (Contains(axisInfo.negatives, code))
+		else
 		{
-			return -1.f;
+			if (Contains(axisInfo.positives, (sf::Keyboard::Key)code))
+			{
+				return 1.f;
+			}
+			else if (Contains(axisInfo.negatives, (sf::Keyboard::Key)code))
+			{
+				return -1.f;
+			}
 		}
-
 		it++;
 	}
 
@@ -163,6 +173,6 @@ bool InputMgr::GetMouseButton(sf::Mouse::Button button)
 
 sf::Vector2i InputMgr::GetMousePosition()
 {
-	return sf::Mouse::getPosition(FRAMEWORK.GetWindow());
+	return mousePosition;
 }
 
