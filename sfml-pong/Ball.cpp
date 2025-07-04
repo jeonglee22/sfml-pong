@@ -64,6 +64,11 @@ void Ball::Reset()
 		SetPosition({ bound.width / 2.f, bound.height / 2.f });
 	}
 
+	blurPos.clear();
+	blurShape.clear();
+	SetMotionBlur(3);
+	
+
 	direction = { 0.f, 0.f };
 	speed = 0.f;
 
@@ -72,6 +77,8 @@ void Ball::Reset()
 	maxX = !isPingPong ? bound.left + bound.width - radius : bound.left + bound.width + 50.f;
 	minY = bound.top + radius * 2.f;
 	maxY = !isPingPong ? bound.top + bound.height + 100.f : maxY = bound.top + bound.height;
+
+	blurDeltaTime = 0.f;
 }
 
 void Ball::Update(float dt)
@@ -152,10 +159,31 @@ void Ball::Update(float dt)
 	}
 
 	SetPosition(pos);
+
+	blurDeltaTime += FRAMEWORK.GetDeltaTime();
+	if(blurDeltaTime > totalBlurDeltaTime)
+	{
+		if (blurPos.size() == blurCount)
+		{
+			blurPos.pop_front();
+		}
+		blurPos.push_back(pos);
+
+		int i = 0;
+		for (auto& blur : blurPos)
+		{
+			blurShape[i++].setPosition(blur);
+		}
+		blurDeltaTime = 0.f;
+	}
 }
 
 void Ball::Draw(sf::RenderWindow& window)
 {
+	for (auto blur : blurShape)
+	{
+		window.draw(blur);
+	}
 	window.draw(shape);
 }
 
@@ -176,4 +204,20 @@ void Ball::Start(float sp)
 	Utils::Normalize(dir);
 	direction = dir;
 	speed = sp;
+}
+
+void Ball::SetMotionBlur(int count)
+{
+	blurCount = count;
+	for (int i = 1; i <= count; i++)
+	{
+		sf::CircleShape newShape = shape;
+		newShape.setFillColor(sf::Color(
+			shape.getFillColor().r * i / count,
+			shape.getFillColor().g * i / count,
+			shape.getFillColor().b * i / count,
+			shape.getFillColor().a));
+		std::cout << (int) newShape.getFillColor().g << std::endl;
+		blurShape.push_back(newShape);
+	}
 }

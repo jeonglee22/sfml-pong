@@ -9,6 +9,8 @@ class Ball : public GameObject
 {
 protected:
     sf::CircleShape shape;
+    std::list<sf::Vector2f> blurPos;
+    std::vector<sf::CircleShape> blurShape;
 
     sf::Vector2f direction;
     float speed = 200.f;
@@ -23,6 +25,10 @@ protected:
     float minY = 0.f;
     float maxX = 0.f;
     float maxY = 0.f;
+
+    int blurCount = 0;
+    float blurDeltaTime = 0.f;
+    float totalBlurDeltaTime = 0.03f;
 
     bool isPingPong = false;
 
@@ -53,5 +59,7 @@ public:
     void SetPing(PingPongUI* pUI) { pingUI = pUI; }
 
     void Start(float sp);
+
+    void SetMotionBlur(int count);
 };
 
