@@ -38,7 +38,14 @@ void Bat::SetOrigin(Origins preset)
 
 void Bat::Init()
 {
-	shapeSize = { 100.f,5.f };
+	if(!isPingPong)
+	{
+		shapeSize = { 100.f,5.f };
+	}
+	else
+	{
+		shapeSize = { 5.f,100.f };
+	}
 	shape.setSize(shapeSize);
 	shape.setFillColor(sf::Color::White);
 
@@ -52,20 +59,31 @@ void Bat::Release()
 void Bat::Reset()
 {
 	sf::FloatRect bound = FRAMEWORK.GetWindowBounds();
-	SetPosition({bound.width / 2.f, bound.height - 20.f});
+	SetPosition(initPos);
 
 	sf::Vector2f size = shape.getSize();
 	minX = bound.left + size.x / 2.f;
 	maxX = bound.left + bound.width - size.x / 2.f;
+	minY = bound.top + size.x / 2.f;
+	maxY = bound.top + bound.height - size.x / 2.f;
 }
 
 void Bat::Update(float dt)
 {
 	sf::FloatRect bound = FRAMEWORK.GetWindowBounds();
 
-	direction.x = InputMgr::GetAxisRaw(Axis::Horizontal);
-	sf::Vector2f pos = GetPosition() + direction * speed * dt;
-	SetPosition({ Utils::Clamp(pos.x, minX, maxX), pos.y });
+	if(!isPingPong)
+	{
+		direction.x = InputMgr::GetAxisRaw(Axis::Horizontal);
+		sf::Vector2f pos = GetPosition() + direction * speed * dt;
+		SetPosition({ Utils::Clamp(pos.x, minX, maxX), pos.y });
+	}
+	else
+	{
+		direction.y = InputMgr::GetAxisRaw(Axis::Vertical);
+		sf::Vector2f pos = GetPosition() + direction * speed * dt;
+		SetPosition({ pos.x, Utils::Clamp(pos.y, minY, maxY) });
+	}
 }
 
 void Bat::Draw(sf::RenderWindow& window)

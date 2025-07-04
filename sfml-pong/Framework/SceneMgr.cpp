@@ -4,11 +4,13 @@
 #include "SceneDev2.h"
 #include "SceneGame.h"
 #include "SceneGame2.h"
+#include "ScenePingPong.h"
 
 void SceneMgr::Init()
 {
 	scenes.insert({ SceneIds::Game, new SceneGame() });
 	scenes.insert({ SceneIds::Game2, new SceneGame2() });
+	scenes.insert({ SceneIds::PingPong, new ScenePingPong() });
 	scenes.insert({ SceneIds::Dev1, new SceneDev1() });
 	scenes.insert({ SceneIds::Dev2, new SceneDev2() });
 

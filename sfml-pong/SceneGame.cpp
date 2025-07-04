@@ -10,7 +10,10 @@ SceneGame::SceneGame()
 
 void SceneGame::Init()
 {
+	sf::FloatRect bound = FRAMEWORK.GetWindowBounds();
+
 	bat = (Bat*) AddGameObject(new Bat("Bat"));
+	bat->SetInitPosition({bound.width / 2.f, bound.height - 20.f});
 	ball = (Ball*) AddGameObject(new Ball("Ball"));
 	ball->SetBat(bat);
 
