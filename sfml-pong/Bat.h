@@ -7,6 +7,7 @@ protected:
     sf::Vector2f shapeSize;
 
     sf::Vector2f initPos;
+    std::vector<sf::Keyboard::Key> moveKeys;
 
     float speed = 500.f;
     sf::Vector2f direction;
@@ -31,6 +32,7 @@ public:
     void SetOrigin(Origins preset) override;
 
     void SetPingPong(bool b) { isPingPong = b; }
+    void AddMoveKeys(sf::Keyboard::Key key) { moveKeys.push_back(key); }
 
     // GameObject을(를) 통해 상속됨
     void Init() override;

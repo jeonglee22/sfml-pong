@@ -15,10 +15,19 @@ void ScenePingPong::Init()
 	bat1 = (Bat*)AddGameObject(new Bat());
 	bat1->SetInitPosition({ bound.left + 20.f, bound.height / 2.f });
 	bat1->SetPingPong(true);
+	bat1->SetOrigin(Origins::MR);
+	bat1->AddMoveKeys(sf::Keyboard::W);
+	bat1->AddMoveKeys(sf::Keyboard::S);
+
 	bat2 = (Bat*)AddGameObject(new Bat());
 	bat2->SetInitPosition({ bound.left + bound.width - 20.f, bound.height / 2.f });
 	bat2->SetPingPong(true);
+	bat2->SetOrigin(Origins::ML);
+	bat2->AddMoveKeys(sf::Keyboard::Up);
+	bat2->AddMoveKeys(sf::Keyboard::Down);
+
 	ball = (Ball*)AddGameObject(new Ball());
+	ball->SetPingPong(true);
 
 	Scene::Init();
 }

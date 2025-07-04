@@ -55,7 +55,14 @@ void Ball::Release()
 void Ball::Reset()
 {
 	sf::FloatRect bound = FRAMEWORK.GetWindowBounds();
-	SetPosition({ bound.width / 2.f, bound.height - 30.f});
+	if(!isPingPong)
+	{
+		SetPosition({ bound.width / 2.f, bound.height - 30.f });
+	}
+	else
+	{
+		SetPosition({ bound.width / 2.f, bound.height / 2.f });
+	}
 
 	direction = { 0.f, 0.f };
 	speed = 0.f;
@@ -64,7 +71,14 @@ void Ball::Reset()
 	minX = bound.left + radius;
 	maxX = bound.left + bound.width - radius;
 	minY = bound.top + radius * 2.f;
-	maxY = bound.top + bound.height + 100.f;
+	if (!isPingPong)
+	{
+		maxY = bound.top + bound.height + 100.f;
+	}
+	else
+	{
+		maxY = bound.top + bound.height;
+	}
 }
 
 void Ball::Update(float dt)

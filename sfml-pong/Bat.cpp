@@ -49,7 +49,7 @@ void Bat::Init()
 	shape.setSize(shapeSize);
 	shape.setFillColor(sf::Color::White);
 
-	SetOrigin(Origins::TC);
+	SetOrigin(originPreset);
 }
 
 void Bat::Release()
@@ -80,9 +80,15 @@ void Bat::Update(float dt)
 	}
 	else
 	{
-		direction.y = InputMgr::GetAxisRaw(Axis::Vertical);
-		sf::Vector2f pos = GetPosition() + direction * speed * dt;
-		SetPosition({ pos.x, Utils::Clamp(pos.y, minY, maxY) });
+		for (auto key : moveKeys)
+		{
+			if (InputMgr::GetKeyDown(key))
+			{
+				direction.y = InputMgr::GetAxisRaw(Axis::Vertical);
+				sf::Vector2f pos = GetPosition() + direction * speed * dt;
+				SetPosition({ pos.x, Utils::Clamp(pos.y, minY, maxY) });
+			}
+		}
 	}
 }
 

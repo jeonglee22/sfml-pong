@@ -20,9 +20,13 @@ protected:
     float maxX = 0.f;
     float maxY = 0.f;
 
+    bool isPingPong = false;
+
 public:
     Ball(const std::string& name = "");
     ~Ball() override = default;
+
+    void SetPingPong(bool b) { isPingPong = b; }
     
     void SetPosition(const sf::Vector2f& pos) override;
     void SetRotation(float rot) override;
