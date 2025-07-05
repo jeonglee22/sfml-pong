@@ -217,7 +217,6 @@ void Ball::SetMotionBlur(int count)
 			shape.getFillColor().g * i / count,
 			shape.getFillColor().b * i / count,
 			shape.getFillColor().a));
-		std::cout << (int) newShape.getFillColor().g << std::endl;
 		blurShape.push_back(newShape);
 	}
 }

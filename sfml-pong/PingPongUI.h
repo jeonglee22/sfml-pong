@@ -7,7 +7,16 @@ protected:
 	TextGo winText;
 	TextGo gameText;
 
+	TextGo score1Text;
+	TextGo score2Text;
+
+	std::vector<sf::RectangleShape> middleBar;
+	int barCount = 20;
+
 	std::string fontId;
+
+	int score1 = 0;
+	int score2 = 0;
 
 	bool gameTextActive = false;
 	bool winTextActive = false;
@@ -23,6 +32,11 @@ public:
 	bool GetTextActive() const { return gameTextActive; }
 	void SetWinTextActive(bool a) { winTextActive = a; }
 	bool GetWinTextActive() const { return winTextActive; }
+
+	void SetScore1(int score);
+	int GetScore1() const { return score1; }
+	void SetScore2(int score);
+	int GetScore2() const { return score2; }
 
 	// GameObject을(를) 통해 상속됨
 	void Init() override;
