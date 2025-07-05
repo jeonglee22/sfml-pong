@@ -63,6 +63,9 @@ void PingPongUI::Init()
 		bar.setPosition({ bound.width / 2.f, bound.height / (barCount * 2) * 2 * (i+1)});
 		middleBar.push_back(bar);
 	}
+
+	SetScore1(0);
+	SetScore2(0);
 }
 
 void PingPongUI::Release()
@@ -86,8 +89,12 @@ void PingPongUI::Reset()
 	gameTextActive = true;
 	SetGameText("Press Enter to Start!");
 
-	SetScore1(0);
-	SetScore2(0);
+	if(winTextActive)
+	{
+		SetScore1(0);
+		SetScore2(0);
+		winTextActive = false;
+	}
 }
 
 void PingPongUI::Update(float dt)

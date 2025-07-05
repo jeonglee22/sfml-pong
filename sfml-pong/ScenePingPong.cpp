@@ -61,10 +61,15 @@ void ScenePingPong::Update(float dt)
 		}
 	}
 
+	if (pingUI->GetTextActive() && InputMgr::GetKeyDown(sf::Keyboard::Enter))
+	{
+		pingUI->SetTextActive(false);
+		SetGameOver();
+	}
+
 	if (pingUI->GetWinTextActive() && InputMgr::GetKeyDown(sf::Keyboard::Enter))
 	{
 		pingUI->SetTextActive(false);
-		pingUI->SetWinTextActive(false);
 		SetGameOver();
 	}
 }

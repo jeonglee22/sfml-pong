@@ -31,6 +31,7 @@ protected:
     float totalBlurDeltaTime = 0.03f;
 
     bool isPingPong = false;
+    int winScore = 5;
 
 public:
     Ball(const std::string& name = "");

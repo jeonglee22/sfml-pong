@@ -102,19 +102,33 @@ void Ball::Update(float dt)
 	{
 		if (pos.x < minX)
 		{
-			pingUI->SetGameText("Press Enter to Restart");
-			pingUI->SetTextActive(true);
-			pingUI->SetWinText("Player  2  Win");
-			pingUI->SetWinTextActive(true);
+			if (!pingUI->GetTextActive())
+			{
+				pingUI->SetGameText("Press Enter to Restart");
+				pingUI->SetTextActive(true);
+				pingUI->SetScore2(pingUI->GetScore2() + 1);
+				if (pingUI->GetScore2() >= 5)
+				{
+					pingUI->SetWinText("Player  2  Win");
+					pingUI->SetWinTextActive(true);
+				}
+			}
 			/*ScenePingPong* scene = (ScenePingPong*)SCENE_MGR.GetCurrentScene();
 			scene->SetGameOver();*/
 		}
 		else if (pos.x > maxX)
 		{
-			pingUI->SetGameText("Press Enter to Restart");
-			pingUI->SetTextActive(true);
-			pingUI->SetWinText("Player  1  Win");
-			pingUI->SetWinTextActive(true);
+			if(!pingUI->GetTextActive())
+			{
+				pingUI->SetGameText("Press Enter to Restart");
+				pingUI->SetTextActive(true);
+				pingUI->SetScore1(pingUI->GetScore1() + 1);
+				if (pingUI->GetScore1() >= 5)
+				{
+					pingUI->SetWinText("Player  1  Win");
+					pingUI->SetWinTextActive(true);
+				}
+			}
 			/*ScenePingPong* scene = (ScenePingPong*)SCENE_MGR.GetCurrentScene();
 			scene->SetGameOver();*/
 		}
